@@ -98,7 +98,6 @@ extension CurrentWeatherViewController {
     }
     
     func setupNavigationBar() {
-        navigationController?.navigationBar.topItem?.title = "Back"
         navigationController?.isNavigationBarHidden = false
         navigationController?.navigationBar.backgroundColor = UIColor.clear
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -119,9 +118,11 @@ extension CurrentWeatherViewController {
         if updateLocation {
             currentLocation.onGotLocation = { [weak self] coordinates in
                 self?.weatherModel.getWeather(coordinates: coordinates)
+                self?.weatherModel.getForecast(coordinates: coordinates)
             }
         } else {
             weatherModel.getWeather(coordinates: manualCoordinates)
+            weatherModel.getForecast(coordinates: manualCoordinates)
         }
     }
     

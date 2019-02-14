@@ -33,7 +33,7 @@ class DetailViewController: UIViewController {
         navigationItem.rightBarButtonItem = addButton
         detailSubView.backgroundColor = .clear
         
-        if let weatherData = weatherData, let city = city {
+        if let _ = weatherData, let _ = city {
             setupDetailScreen()
         }
     }

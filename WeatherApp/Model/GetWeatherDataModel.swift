@@ -23,10 +23,22 @@ class GetWeatherDataModel {
                 self?.onGotData?(data)
             case .Error(let error):
                 self?.onGotError?(error)
+            case .Success( .Forecast(_)):
+                return
+            }
+        }
+    }
+    func getForecast(coordinates: CLLocationCoordinate2D) {
+        request.getForecastData(coordinates: coordinates) { [weak self] response in
+            switch response {
             case .Success(let .Forecast(data)):
                 let firstFive = Array(data.list.prefix(5))
                 self?.fiveDayForecast = firstFive
                 self?.onGotForecast?()
+            case .Error(let error):
+                self?.onGotError?(error)
+            case .Success( .Current(_)):
+                return
             }
         }
     }

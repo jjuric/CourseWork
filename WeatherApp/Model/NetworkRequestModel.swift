@@ -28,12 +28,13 @@ class NetworkRequestModel {
                 }
             }
         }
-        
+    }
+    func getForecastData(coordinates: CLLocationCoordinate2D, completion: @escaping (NetworkResponse) -> Void ) {
         apiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=\(coordinates.latitude)&lon=\(coordinates.longitude)&APPID=\(apiKey)"
         Alamofire.request(apiUrl).responseJSON { response in
             if let json = response.data {
                 let decoder = JSONDecoder()
-
+                
                 if let weather = try? decoder.decode(WeatherData.self, from: json) {
                     let data = NetworkResponse.Success(response: .Forecast(weather))
                     completion(data)
@@ -43,5 +44,4 @@ class NetworkRequestModel {
             }
         }
     }
-    
 }

@@ -64,6 +64,7 @@ extension MapSearchController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         weatherModel.getWeather(coordinates: mapView.centerCoordinate)
+        weatherModel.getForecast(coordinates: mapView.centerCoordinate)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
