@@ -17,9 +17,10 @@ struct City: Decodable {
     var coord: Coordinates
     var country: String
 }
-struct Coordinates: Decodable {
+struct Coordinates: Codable {
     var lat: Double
     var lon: Double
+    
 }
 struct List: Decodable {
     var dt: Int
@@ -43,12 +44,17 @@ struct Weather: Decodable {
     var description: String
     var icon: String
     
-    var imageData: Data? {
-        if let url = URL(string: "https://openweathermap.org/img/w/\(icon).png") {
-            if let data = try? Data(contentsOf: url) {
-                return data
-            }
-        }
-        return nil
+    var customIcon: WeatherIcons? {
+        guard !(icon.isEmpty) else { return nil }
+        return WeatherIcons(icon)
     }
+    
+//    var imageData: Data? {
+//        if let url = URL(string: "https://openweathermap.org/img/w/\(icon).png") {
+//            if let data = try? Data(contentsOf: url) {
+//                return data
+//            }
+//        }
+//        return nil
+//    }
 }

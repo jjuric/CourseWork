@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ForecastTableViewCell: UITableViewCell {
+class ForecastCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var imagePreview: UIImageView!
     @IBOutlet weak var weatherLabel: UILabel!

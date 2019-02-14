@@ -14,17 +14,21 @@ class GetWeatherDataModel {
     var fiveDayForecast: [List] = []
     var onGotData: ((WeatherDataCurrent)->Void)?
     var onGotForecast: (()->Void)?
+    var onGotError: ((String)->Void)?
 
-    func getForecast(coordinate: CLLocationCoordinate2D) {
-        request.getWeatherForecast(coordinates: coordinate) { [weak self] data in
-            let firstFive = Array(data.list.prefix(5))
-            self?.fiveDayForecast = firstFive
-            self?.onGotForecast?()
-        }
-    }
     func getWeather(coordinates: CLLocationCoordinate2D) {
-        request.getWeatherData(coordinates: coordinates) { [weak self] data in
-            self?.onGotData?(data)
+        request.getWeatherData(coordinates: coordinates) { [weak self] response in
+            switch response {
+            case .Success(let .Current(data)):
+                self?.onGotData?(data)
+            case .Error(let error):
+                self?.onGotError?(error)
+            case .Success(let .Forecast(data)):
+                let firstFive = Array(data.list.prefix(5))
+                self?.fiveDayForecast = firstFive
+                self?.onGotForecast?()
+            }
         }
     }
+    
 }
